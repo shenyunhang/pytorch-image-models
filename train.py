@@ -329,6 +329,7 @@ def main():
         bn_eps=args.bn_eps,
         scriptable=args.torchscript,
         checkpoint_path=args.initial_checkpoint)
+    _logger.info(model)
 
     if args.local_rank == 0:
         _logger.info('Model %s created, param count: %d' %
