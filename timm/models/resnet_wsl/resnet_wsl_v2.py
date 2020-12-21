@@ -759,7 +759,7 @@ def wsl_resnet18(pretrained=False, **kwargs):
 def wsl_resnet50(pretrained=False, **kwargs):
     """Constructs a ResNet-50 model.
     """
-    model_args = dict(dept=50, res2_out_chans=256, fc_dims=[2048, 4096], block=Bottleneck, layers=[3, 4, 6, 3],  **kwargs)
+    model_args = dict(depth=50, res2_out_chans=256, fc_dims=[2048, 4096], block=BottleneckBlock, layers=[3, 4, 6, 3],  **kwargs)
     return _create_resnet('wsl_resnet50', pretrained, **model_args)
 
 
@@ -767,6 +767,6 @@ def wsl_resnet50(pretrained=False, **kwargs):
 def wsl_resnet101(pretrained=False, **kwargs):
     """Constructs a ResNet-101 model.
     """
-    model_args = dict(dept=101, res2_out_chans=256, fc_dims=[2048, 4096], block=Bottleneck, layers=[3, 4, 23, 3], **kwargs)
+    model_args = dict(depth=101, res2_out_chans=256, fc_dims=[2048, 4096], block=BottleneckBlock, layers=[3, 4, 23, 3], **kwargs)
     return _create_resnet('wsl_resnet101', pretrained, **model_args)
 
