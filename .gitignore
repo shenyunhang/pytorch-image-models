@@ -111,4 +111,5 @@ Testing notebook.ipynb
 *.swo
 *.swn
 output/
+output
 summary.csv

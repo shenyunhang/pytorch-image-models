@@ -54,13 +54,20 @@ def main():
                 # load with the unmodified model using BatchNorm2d.
                 continue
             name = k[7:] if k.startswith('module') else k
-            name = "box_head" + k[3:] if k.startswith('dan') else k
-            print(name)
+
+            if k.startswith('dan'):
+                name = "roi_heads.box_head" + k[3:]
+            if k.startswith('res'):
+                name = "backbone." + k
+            if k.startswith('stem'):
+                name = "backbone." + k
+            print(k, "\t-->\t" ,name)
+
             new_state_dict[name] = v
         print("=> Loaded state_dict from '{}'".format(args.checkpoint))
 
         checkpoint = OrderedDict()
-        checkpoint["matching_heuristics"] = True
+        # checkpoint["matching_heuristics"] = True
         checkpoint["model"] = new_state_dict
         try:
             torch.save(checkpoint, _TEMP_NAME, _use_new_zipfile_serialization=False)

@@ -488,7 +488,8 @@ class ResNet(Backbone):
         self.stage_names = tuple(self.stage_names)  # Make it static for scripting
 
         if num_classes is not None:
-            self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
+            # self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
+            self.maxpool = nn.AdaptiveMaxPool2d((7, 7))
             input_shape = ShapeSpec(channels=curr_channels, height=7, width=7)
             self.dan = DiscriminativeAdaptionNeck(input_shape, conv_dims=[], fc_dims=fc_dims)
             self.linear = nn.Linear(fc_dims[-1], num_classes)
