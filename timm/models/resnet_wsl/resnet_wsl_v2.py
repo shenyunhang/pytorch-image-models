@@ -114,6 +114,18 @@ class BasicBlock(CNNBlockBase):
             if layer is not None:  # shortcut can be None
                 weight_init.c2_msra_fill(layer)
 
+        # Zero-initialize the last normalization in each residual branch,
+        # so that at the beginning, the residual branch starts with zeros,
+        # and each residual block behaves like an identity.
+        # See Sec 5.1 in "Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour":
+        # "For BN layers, the learnable scaling coefficient γ is initialized
+        # to be 1, except for each residual block's last BN
+        # where γ is initialized to be 0."
+
+        nn.init.constant_(self.conv2.norm.weight, 0)
+        # TODO this somehow hurts performance when training GN models from scratch.
+        # Add it as an option when we need to use this code to train a backbone.
+
     def forward(self, x):
         if self.has_pool:
             x = self.pool(x)
